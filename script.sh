@@ -6,6 +6,8 @@ auto enp0s8
 iface enp0s8 inet static
 address 192.168.3.5
 netmask 255.255.255.192
+
+pre-up iptables-restore /etc/ip
 EOF
 
 # DHCP Server 
@@ -16,8 +18,13 @@ mv network_epam/dhcpd.conf /etc/dhcp/dhcpd.conf
 sudo sed -i 's/INTERFACES=""/INTERFACES="enp0s8"/' /etc/default/isc-dhcp-server
 sudo service isc-dhcp-server restart
 
+#NAT MASQUERADE
+sudo iptables -t nat -A POSTROUTING -o enp0s8 -j MASQUERADE
+sudo bash -c "iptables-save > /etc/ip"
+sudo chmod +x /etc/ip
+
+
 #DNS Server
-iptables -t nat -A POSTROUTING -o enp0s3 -j MASQUERADE
 
 sudo apt-get install bind9 bind9utils -y
 sudo sed -i 's/OPTIONS=" -u bind"/OPTIONS="-4 -u bind"/' /etc/default/bind9
