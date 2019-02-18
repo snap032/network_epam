@@ -17,6 +17,8 @@ sudo sed -i 's/INTERFACES=""/INTERFACES="enp0s8"/' /etc/default/isc-dhcp-server
 sudo service isc-dhcp-server restart
 
 #DNS Server
+iptables -t nat -A POSTROUTING -o enp0s3 -j MASQUERADE
+
 sudo apt-get install bind9 bind9utils -y
 sudo sed -i 's/OPTIONS=" -u bind"/OPTIONS="-4 -u bind"/' /etc/default/bind9
 
