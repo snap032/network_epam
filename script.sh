@@ -16,6 +16,7 @@ sudo apt-get install git -y
 git clone https://github.com/snap032/network_epam.git
 mv network_epam/dhcpd.conf /etc/dhcp/dhcpd.conf
 sudo sed -i 's/INTERFACES=""/INTERFACES="enp0s8"/' /etc/default/isc-dhcp-server
+sudo sed -i 's/#net.ipv4.ip_forward=1/net.ipv4.ip_forward=1/' /etc/sysctl.conf
 sudo service isc-dhcp-server restart
 
 #NAT MASQUERADE
