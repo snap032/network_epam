@@ -27,7 +27,9 @@ EOF
     nat.vm.box = "ubuntu/xenial64"
     nat.vm.hostname = "nat"
     nat.vm.provision "shell", path: "script.sh"
-  end
+    nat.vm.provision "shell", path: "bind.sh"
+
+end
 
   
   config.vm.define "nginx1" do |nginx1|
