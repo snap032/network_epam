@@ -4,9 +4,12 @@ Vagrant.configure("2") do |config|
     r13.vm.box = "ubuntu/xenial64"
     r13.vm.hostname = "R13"
     r13.vm.provision "shell", inline: <<-SHELL
+    sudo sed -i 's/#net.ipv4.ip_forward=1/net.ipv4.ip_forward=1/' /etc/sysctl.conf
     sudo tee -a /etc/network/interfaces << EOF
 auto enp0s8
-iface enp0s8 inet dhcp
+iface enp0s8 inet static
+address 192.168.1.5
+netmask 255.255.255.248
 EOF
   SHELL
   end
@@ -15,9 +18,12 @@ EOF
     r23.vm.box = "ubuntu/xenial64"
     r23.vm.hostname = "R23"
     r23.vm.provision "shell", inline: <<-SHELL
+    sudo sed -i 's/#net.ipv4.ip_forward=1/net.ipv4.ip_forward=1/' /etc/sysctl.conf
     sudo tee -a /etc/network/interfaces << EOF
 auto enp0s8
 iface enp0s8 inet dhcp
+address 192.168.2.5
+netmask 255.255.255.224
 EOF
   SHELL
   end
