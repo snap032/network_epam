@@ -25,8 +25,5 @@ sudo bash -c "iptables-save > /etc/ip"
 sudo chmod +x /etc/ip
 
 
-#DNS Server
 
-sudo apt-get install bind9 bind9utils -y
-sudo sed -i 's/OPTIONS=" -u bind"/OPTIONS="-4 -u bind"/' /etc/default/bind9
 
